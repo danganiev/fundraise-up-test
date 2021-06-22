@@ -1,4 +1,4 @@
-# fundraise-up-test2
+# fundraise-up-test
 
 ## Project setup
 ```
