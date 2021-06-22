@@ -6,7 +6,7 @@
         <input name="donation-input" />
       </div>
       <div>
-        <button @click="donate">Donate</button>
+        <button @click="donate" type="button">Donate</button>
       </div>
     </form>
   </div>

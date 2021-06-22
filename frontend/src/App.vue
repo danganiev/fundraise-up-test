@@ -1,6 +1,6 @@
 <template>
   <!--<HelloWorld msg="Welcome to Your Vue.js App" /> -->
-  <DonationForm msg="Welcome to Your Vue.js App" />
+  <DonationForm />
 </template>
 
 <script>
