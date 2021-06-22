@@ -1,0 +1,65 @@
+version: '3.7'
+services:
+  mongo:
+    container_name: frup-mongo
+    image: mongo:4.4.6
+    restart: always
+    networks:
+      - frup-default
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+
+  nginx:
+    container_name: frup-nginx
+    image: nginx
+    networks:
+      - frup-default
+    ports:
+      - 8000:8000
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    # command: [nginx-debug, '-g', 'daemon off;']
+    depends_on:
+      - backend
+      - frontend
+
+  backend:
+    container_name: 'frup-backend'
+    networks:
+      - frup-default
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    env_file:
+      - ./backend/.env
+    volumes:
+      - ./backend:/back
+      # this prevents node_modules from mounting into volume
+      - nodemod-volume:/back/node_modules
+    working_dir: /back
+    ports:
+      - 3000:3000
+    depends_on:
+      - mongo
+    #* Overrides default command so things don't shut down after the process ends.
+    command: bash -c "npm run start && sleep 365d"
+
+  frontend:
+    container_name: frup-frontend
+    networks:
+      - frup-default
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    volumes:
+      - ./frontend:/front
+      - front-nodemod-volume:/front/node_modules
+    ports:
+      - 8080:8080
+
+networks:
+  frup-default:
+volumes:
+  nodemod-volume:
+  front-nodemod-volume:
