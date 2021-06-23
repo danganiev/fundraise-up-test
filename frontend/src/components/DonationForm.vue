@@ -3,7 +3,7 @@
     <form class="donation-form">
       <div>
         <label for="donation-input">$</label>
-        <input name="donation-input" />
+        <input name="donation-input" v-model="donation" />
       </div>
       <div>
         <button @click="donate" type="button">Donate</button>

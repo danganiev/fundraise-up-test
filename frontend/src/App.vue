@@ -4,7 +4,6 @@
 </template>
 
 <script>
-//import HelloWorld from "./components/HelloWorld.vue";
 import DonationForm from "./components/DonationForm.vue";
 
 export default {

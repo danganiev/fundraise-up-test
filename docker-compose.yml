@@ -9,6 +9,8 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
+    volumes:
+      - mongo-volume:/data/db
 
   nginx:
     container_name: frup-nginx
@@ -63,3 +65,4 @@ networks:
 volumes:
   nodemod-volume:
   front-nodemod-volume:
+  mongo-volume:
