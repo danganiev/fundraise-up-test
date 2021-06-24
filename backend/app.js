@@ -17,10 +17,15 @@ async function connectToDB(){
 }
 connectToDB();
 
+const currencies = ["USD", "GBP", "EUR", "RUB"];
+
 router.post("donate", "/donate", (ctx) => {
-    let donation = ctx.request.body.donation;
-    if (donation){
-        ctx.collection.insertOne({donation: ctx.request.body.donation})
+    const donation = ctx.request.body.donation;
+    const donationNum = Number(donation);
+    const curr = ctx.request.body.currency;
+
+    if (donation && donationNum > 0 && currencies.indexOf(curr) !== -1){
+        ctx.collection.insertOne({donation: donationNum, currency: curr})
     }
 
     ctx.body = {
