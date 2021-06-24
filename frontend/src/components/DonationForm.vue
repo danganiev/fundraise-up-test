@@ -3,6 +3,7 @@
     @buttonsetclick="onButtonSetClick"
     :presets="changedPresets"
     :symbol="currMap[selectedCurrency].symbol"
+    :donation="donation"
   />
   <div class="donation-form-container">
     <form class="donation-form">

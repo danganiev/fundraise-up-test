@@ -74,7 +74,10 @@ export default {
       },
       // setter
       set(newValue) {
-        this.donation = newValue;
+        if (typeof newValue === "string") {
+          newValue = newValue.replaceAll(",", "");
+        }
+        this.donation = Number(newValue);
       },
     },
   },
@@ -95,15 +98,21 @@ export default {
     },
 
     recalcPresets: function (e) {
-      let oldCur = this.selectedCurrency;
+      const oldCur = this.selectedCurrency;
       this.selectedCurrency = e.target.value;
-      let rate = this.currMap[this.selectedCurrency].rate;
-      this.formattedDonation = convertCurrency(
-        this.donation / this.currMap[oldCur].rate,
-        rate
-      );
+      const rate = this.currMap[this.selectedCurrency].rate;
+      const oldRate = this.currMap[oldCur].rate;
+      const index = this.changedPresets.indexOf(this.donation);
       this.changedPresets = changePresets(this.presets, rate);
+      if (index === -1) {
+        this.formattedDonation = Number(
+          (this.donation * rate) / oldRate
+        ).toFixed();
+      } else {
+        this.formattedDonation = this.changedPresets[index];
+      }
     },
+
     isNumber: function (e) {
       e = e ? e : window.event;
       var charCode = e.which ? e.which : e.keyCode;
