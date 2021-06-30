@@ -1,4 +1,4 @@
-# fundraise-up-test
+# onecompany-test
 
 ## Project setup
 ```
